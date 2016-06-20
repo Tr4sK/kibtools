@@ -168,7 +168,7 @@ def save_all_types(cluster, output_directory):
             output_file = '{path}{sub_path}/{file}.json'.format(
                 path=output_directory,
                 sub_path=save_type,
-                file=objects['name']
+                file=objects['name'].encode('utf8')
             )
             with open(output_file, 'w') as output_json:
                 json.dump(objects['source'], output_json)
