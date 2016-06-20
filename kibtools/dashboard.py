@@ -44,6 +44,17 @@ def parse_visualizations(dashboard):
     """
     return [panel['id'] for panel in json.loads(dashboard['panelsJSON'])]
 
+def savedSearchIdOrNot(visualization):
+  """
+  Check if savedSearchId is set
+  :param visualization: JSON visualization response
+  :return: string of savedSearchId or nothing
+  """
+  savedSearchId = ''
+  if 'savedSearchId' in visualization:
+    savedSearchId = visualization['savedSearchId']
+  return savedSearchId
+
 def get_dashboards(cluster):
     """
     GET all the saved dashboards
@@ -88,7 +99,7 @@ def get_visualizations(cluster):
     visualizations = [
         dict(name=viz['_id'],
              source=viz['_source'],
-             searches=viz['_source']['savedSearchId']
+             searches=savedSearchIdOrNot(viz['_source'])
              ) for viz in visualizations
         ]
 
